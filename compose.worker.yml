@@ -1,0 +1,13 @@
+services:
+  hadoop-worker-2:
+    image: taxi-hadoop
+    container_name: hadoop-worker-2
+    network_mode: host
+    environment:
+      MASTER_HOST: ${MASTER_HOST}
+      NODE_HOST: ${NODE_HOST}
+    volumes:
+      - worker2_data:/data/datanode
+    command: /usr/local/bin/start-worker.sh
+volumes:
+  worker2_data:

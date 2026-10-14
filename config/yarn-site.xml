@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration>
+  <property><name>yarn.resourcemanager.hostname</name><value>MASTER_HOST</value></property>
+  <property><name>yarn.nodemanager.hostname</name><value>NODE_HOST</value></property>
+  <property><name>yarn.nodemanager.aux-services</name><value>mapreduce_shuffle</value></property>
+  <property><name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name><value>org.apache.hadoop.mapred.ShuffleHandler</value></property>
+  <property><name>yarn.nodemanager.pmem-check-enabled</name><value>false</value></property>
+  <property><name>yarn.nodemanager.vmem-check-enabled</name><value>false</value></property>
+  <property><name>yarn.log-aggregation-enable</name><value>true</value></property>
+</configuration>
+

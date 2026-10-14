@@ -1,0 +1,52 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{newtxtext}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\setstretch{1.5}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\setlist[itemize]{noitemsep,topsep=2pt}
+\pagestyle{empty}
+\begin{document}
+\begin{center}
+{\LARGE \textbf{NYC Taxi Demand and Fare Analysis}}\\[3pt]
+{\large \textit{Spark SQL and Structured Streaming on Hadoop}}\\[14pt]
+\rule{\textwidth}{0.5pt}\\[8pt]
+\textbf{Course Name and Code:} \underline{\hspace{8cm}}\\[3pt]
+\textbf{Semester:} \underline{\hspace{2.5cm}} \quad \textbf{Department:} \underline{\hspace{3.5cm}} \quad \textbf{Section:} \underline{\hspace{1.5cm}}\\[10pt]
+\textbf{Team Members}\\[3pt]
+1. \underline{\hspace{5cm}} \quad Roll No.: \underline{\hspace{3cm}} \quad Register No.: \underline{\hspace{3cm}}\\
+2. \underline{\hspace{5cm}} \quad Roll No.: \underline{\hspace{3cm}} \quad Register No.: \underline{\hspace{3cm}}
+\end{center}
+\section*{1. Title}
+NYC Taxi Demand and Fare Analysis Using Spark SQL and Structured Streaming on Hadoop.
+\section*{2. Introduction and Motivation}
+New York City taxi trips contain pickup and drop-off times, distance, fare, payment type, and location identifiers. The 2023 Yellow Taxi collection contains millions of records and exceeds 500 MB. Processing this volume through spreadsheets or a single machine is inefficient. HDFS distributes the data across worker nodes. Spark on YARN processes the data in parallel. The project identifies demand peaks, fare patterns by distance, and payment behaviour. A Structured Streaming task processes newly added trip records.
+\section*{3. Problem Statement}
+Taxi operators and transport analysts need evidence about demand, fares, and payments. This project stores public NYC Yellow Taxi data in HDFS, removes invalid records, and uses Spark on YARN to produce demand, fare, distance, and payment summaries. It also processes incoming records through Structured Streaming.
+\section*{4. Objectives}
+\begin{enumerate}
+\item Configure one NameNode/ResourceManager and two DataNode/NodeManager nodes.
+\item Store a public NYC Yellow Taxi dataset larger than 500 MB in HDFS.
+\item Generate demand, payment, and distance-fare summaries with Spark SQL and DataFrames on YARN.
+\item Process an incoming HDFS batch with Spark Structured Streaming.
+\item Present HDFS, YARN, Spark History Server, and result outputs.
+\end{enumerate}
+\section*{5. Dataset Details}
+\textbf{Name:} NYC TLC Yellow Taxi Trip Records, January--December 2023.\\
+\textbf{Source:} New York City Taxi and Limousine Commission (TLC).\\
+\textbf{Official dataset page:} \url{https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page}\\
+\textbf{Format:} Apache Parquet.\\
+\textbf{Size and qualification:} 12 monthly files, together exceeding 500 MB, with millions of trip records; therefore suitable for distributed storage and parallel processing.\\
+\textbf{Attributes:} 19 attributes, including pickup and drop-off timestamps, passenger count, trip distance, location IDs, payment type, fare amount, tip amount, and total amount.\\
+\textbf{License:} NYC Open Data Terms of Use; publicly released by NYC TLC. The project uses aggregate trip patterns only.\\
+\textbf{Why big data tools are needed:} HDFS distributes storage and Spark on YARN distributes cleaning and aggregation.
+\section*{6. References}
+\begin{enumerate}
+\item New York City Taxi and Limousine Commission. TLC Trip Record Data (dataset page and source link). \url{https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page}
+\item Apache Hadoop. Hadoop Documentation. \url{https://hadoop.apache.org/docs/}
+\item Apache Spark. Spark SQL, DataFrames and Structured Streaming. \url{https://spark.apache.org/docs/latest/}
+\end{enumerate}
+\end{document}

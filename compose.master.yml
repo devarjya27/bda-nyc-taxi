@@ -1,0 +1,15 @@
+services:
+  hadoop-master:
+    image: taxi-hadoop
+    container_name: hadoop-master
+    network_mode: host
+    environment:
+      MASTER_HOST: ${MASTER_HOST}
+      NODE_HOST: ${NODE_HOST}
+    volumes:
+      - master_name:/data/name
+      - worker1_data:/data/datanode
+    command: /usr/local/bin/start-master.sh
+volumes:
+  master_name:
+  worker1_data:

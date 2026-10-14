@@ -1,0 +1,20 @@
+import org.apache.spark.sql.functions._
+
+val raw = spark.read.parquet("hdfs:///project/raw/*.parquet")
+val clean = raw.filter(col("tpep_pickup_datetime").isNotNull)
+  .filter(col("tpep_dropoff_datetime").isNotNull).filter(col("trip_distance") > 0)
+  .filter(col("fare_amount") > 0).filter(col("passenger_count") >= 0 || col("passenger_count").isNull)
+  .withColumn("pickup_hour", hour(col("tpep_pickup_datetime")))
+  .withColumn("trip_minutes", (unix_timestamp(col("tpep_dropoff_datetime")) - unix_timestamp(col("tpep_pickup_datetime"))) / 60)
+  .filter(col("trip_minutes") > 0 && col("trip_minutes") <= 180)
+clean.createOrReplaceTempView("trips")
+
+spark.sql("SELECT pickup_hour, COUNT(*) AS trips, ROUND(AVG(fare_amount), 2) AS avg_fare FROM trips GROUP BY pickup_hour ORDER BY trips DESC")
+  .coalesce(1).write.mode("overwrite").option("header", "true").csv("hdfs:///project/output/batch/top_pickup_hours")
+spark.sql("SELECT payment_type, COUNT(*) AS trips, ROUND(AVG(tip_amount), 2) AS avg_tip FROM trips GROUP BY payment_type ORDER BY trips DESC")
+  .coalesce(1).write.mode("overwrite").option("header", "true").csv("hdfs:///project/output/batch/payment_summary")
+clean.groupBy(when(col("trip_distance") < 2, "0-2 miles").when(col("trip_distance") < 5, "2-5 miles")
+  .when(col("trip_distance") < 10, "5-10 miles").otherwise("10+ miles").alias("distance_band"))
+  .agg(count("*").alias("trips"), round(avg("fare_amount"), 2).alias("avg_fare")).orderBy("distance_band")
+  .coalesce(1).write.mode("overwrite").option("header", "true").csv("hdfs:///project/output/batch/distance_fare_summary")
+System.exit(0)
