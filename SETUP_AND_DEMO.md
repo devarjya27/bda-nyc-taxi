@@ -127,9 +127,9 @@ The loader streams all 12 official 2023 NYC TLC Yellow Taxi files into HDFS. The
 ## 8. Show outputs
 
 ```bash
-podman exec hadoop-master hdfs dfs -cat /project/output/batch/top_pickup_hours/part-*
-podman exec hadoop-master hdfs dfs -cat /project/output/batch/payment_summary/part-*
-podman exec hadoop-master hdfs dfs -cat /project/output/batch/distance_fare_summary/part-*
+podman exec hadoop-master hdfs dfs -cat '/project/output/batch/top_pickup_hours/part-*'
+podman exec hadoop-master hdfs dfs -cat '/project/output/batch/payment_summary/part-*'
+podman exec hadoop-master hdfs dfs -cat '/project/output/batch/distance_fare_summary/part-*'
 podman exec hadoop-master hdfs dfs -ls /project/output/streaming
 ```
 

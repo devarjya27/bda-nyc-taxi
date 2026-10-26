@@ -4,6 +4,10 @@ services:
     container_name: hadoop-master
     hostname: hadoop-master
     command: /usr/local/bin/start-master.sh
+    environment:
+      MASTER_HOST: hadoop-master
+      NODE_HOST: hadoop-master
+      MASTER_RUNS_WORKER: "false"
     ports:
       - "9870:9870"
       - "8088:8088"
@@ -17,6 +21,12 @@ services:
     container_name: hadoop-worker-1
     hostname: hadoop-worker-1
     command: /usr/local/bin/start-worker.sh
+    # The HDFS file browser uses this fixed DataNode web port for previews.
+    ports:
+      - "9864:9864"
+    environment:
+      MASTER_HOST: hadoop-master
+      NODE_HOST: hadoop-worker-1
     volumes: [worker1_data:/data/datanode]
     networks: [hadoopnet]
   hadoop-worker-2:
@@ -24,6 +34,9 @@ services:
     container_name: hadoop-worker-2
     hostname: hadoop-worker-2
     command: /usr/local/bin/start-worker.sh
+    environment:
+      MASTER_HOST: hadoop-master
+      NODE_HOST: hadoop-worker-2
     volumes: [worker2_data:/data/datanode]
     networks: [hadoopnet]
 volumes:

@@ -1,6 +1,10 @@
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.{DoubleType, LongType, StructType, TimestampType}
 
-val schema = spark.read.parquet("hdfs:///project/raw/*.parquet").schema
+val schema = new StructType()
+  .add("tpep_pickup_datetime", TimestampType, true)
+  .add("PULocationID", LongType, true)
+  .add("fare_amount", DoubleType, true)
 val incoming = spark.readStream.schema(schema).parquet("hdfs:///project/stream-in")
 val summary = incoming.filter(col("fare_amount") > 0).select(hour(col("tpep_pickup_datetime")).alias("pickup_hour"), col("PULocationID"), col("fare_amount"))
 val query = summary.writeStream.format("csv").option("path", "hdfs:///project/output/streaming")

@@ -39,7 +39,7 @@ Results are in `hdfs:///project/output/batch` and `hdfs:///project/output/stream
 
 1. In HDFS UI, show the 12 files under `/project/raw`.
 2. In YARN UI, show completed batch and streaming applications.
-3. Run `podman exec hadoop-master hdfs dfs -cat /project/output/batch/top_pickup_hours/part-*`.
+3. Run `podman exec hadoop-master hdfs dfs -cat '/project/output/batch/top_pickup_hours/part-*'`.
 4. Explain the topology: one NameNode/ResourceManager, two DataNode/NodeManagers.
 5. Explain cleaning: missing timestamps, nonpositive fare/distance, and invalid duration are rejected.
 

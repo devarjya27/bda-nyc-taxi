@@ -1,9 +1,10 @@
 import org.apache.spark.sql.functions._
 
-val raw = spark.read.parquet("hdfs:///project/raw/*.parquet")
+// Keep the live two-laptop demonstration quick: use the preserved local demo file.
+val raw = spark.read.parquet("hdfs:///project/stream-in/demo_batch/trips.parquet")
 val clean = raw.filter(col("tpep_pickup_datetime").isNotNull)
   .filter(col("tpep_dropoff_datetime").isNotNull).filter(col("trip_distance") > 0)
-  .filter(col("fare_amount") > 0).filter(col("passenger_count") >= 0 || col("passenger_count").isNull)
+  .filter(col("fare_amount") > 0)
   .withColumn("pickup_hour", hour(col("tpep_pickup_datetime")))
   .withColumn("trip_minutes", (unix_timestamp(col("tpep_dropoff_datetime")) - unix_timestamp(col("tpep_pickup_datetime"))) / 60)
   .filter(col("trip_minutes") > 0 && col("trip_minutes") <= 180)
