@@ -1,6 +1,5 @@
 import org.apache.spark.sql.functions._
 
-// Keep the live two-laptop demonstration quick: use the preserved local demo file.
 val raw = spark.read.parquet("hdfs:///project/stream-in/demo_batch/trips.parquet")
 val clean = raw.filter(col("tpep_pickup_datetime").isNotNull)
   .filter(col("tpep_dropoff_datetime").isNotNull).filter(col("trip_distance") > 0)
